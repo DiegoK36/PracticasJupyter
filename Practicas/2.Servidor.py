@@ -52,9 +52,9 @@ class Servidor():
                     except: pass
 
     def broadcast(self, msg, cliente):
+        print(pickle.loads(msg))
         for c in self.clientes:
             print("Clientes conectados ahora = ", len(self.clientes))
-            print(msg)
             try:
                 if c != cliente: 
                     print(pickle.loads(msg))

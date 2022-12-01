@@ -10,7 +10,7 @@ import time
 
 class Cliente():
 
-    def __init__(self, host=input("Introduzca la IP del Servidor: "), port=int(input("Introduzca el puerto del servidor: "))):
+    def __init__(self, host=input("Introduzca la IP del Servidor: "), port=int(input("Introduzca el puerto del servidor: ")), nick=input('Introduzca su Nickname: ')):
             
             self.s = socket.socket()
             self.s.connect((host, int(port)))
@@ -32,9 +32,8 @@ class Cliente():
     
             inicioS = time.time()
             X = self.sec_mult(A, B, n_fil_A, n_col_A, n_fil_B, n_col_B) # Ejecuto multiplicacion secuencial
-            type(X)
             finS = time.time()
-            msg = ('Diego Rodríguez: ', X)
+            msg = (nick,X)
             self.enviar(msg)
             
             print('\n\nMatriz  A y B se han multiplicado con exito en SECUENCIAL ha tardado ', finS-inicioS)
@@ -44,10 +43,10 @@ class Cliente():
 
             while True:
                 try:
-                        data = self.s.recv(32)
-                        if data: print(pickle.loads(data))
+                        data = self.s.recv(4096)
+                        if data: data_arr = pickle.loads(data)
 
-                except: pass
+                except: print('ERROR: Mensaje demasiado grande')
 
             
     def enviar(self,msg):
